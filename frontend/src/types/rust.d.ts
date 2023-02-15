@@ -1,14 +1,15 @@
 /* This file is generated and managed by tsync */
 
-interface Lobby {
-  id: number
-  repository: string
+interface AnsweredQuestion {
+  live_question_id: number
+  user_id: number
+  selected: number
   created_at: Date
   updated_at: Date
 }
 
-interface LobbyForm {
-  repository: string
+interface AnsweredQuestionForm {
+  selected: number
 }
 
 interface PaginationResult<T> {
@@ -20,17 +21,37 @@ interface PaginationResult<T> {
   num_pages: number
 }
 
-interface Question {
+interface LiveQuestion {
   id: number
   serialized_data: string
-  lobby: number
+  lobby_id: number
   created_at: Date
   updated_at: Date
 }
 
-interface QuestionForm {
+interface LiveQuestionForm {
   serialized_data: string
-  lobby: number
+  lobby_id: number
+}
+
+interface PaginationResult<T> {
+  items: Array<T>
+  total_items: number
+  /** 0-based index */
+  page: number
+  page_size: number
+  num_pages: number
+}
+
+interface Lobby {
+  id: number
+  repository: string
+  created_at: Date
+  updated_at: Date
+}
+
+interface LobbyForm {
+  repository: string
 }
 
 interface PaginationResult<T> {

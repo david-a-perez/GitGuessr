@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::schema::*;
 use crate::diesel::*;
 use crate::{
-    user::User, ID, UTC,
+    user::User, ID, Utc,
 };
 
 #[tsync::tsync]
@@ -19,7 +19,7 @@ pub struct UserPermission {
     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
     pub user_id: ID,
     pub permission: String,
-    pub created_at: UTC,
+    pub created_at: Utc,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, Insertable, AsChangeset)]

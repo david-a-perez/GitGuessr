@@ -1,7 +1,7 @@
 use crate::schema::*;
 use crate::diesel::*;
 
-use super::{PaginationParams, ID, UTC};
+use super::{PaginationParams, ID, Utc};
 use create_rust_app::Connection;
 use diesel::QueryResult;
 use serde::{Deserialize, Serialize};
@@ -21,8 +21,8 @@ pub struct User {
     pub hash_password: String,
     pub activated: bool,
 
-    pub created_at: UTC,
-    pub updated_at: UTC,
+    pub created_at: Utc,
+    pub updated_at: Utc,
 }
 
 #[tsync::tsync]
@@ -52,7 +52,7 @@ impl User {
         users.filter(id.eq(item_id)).first::<User>(db)
     }
 
-    pub fn find_by_email(db: &mut Connection, item_email: String) -> QueryResult<Self> {
+    pub fn find_by_email(db: &mut Connection, item_email: &str) -> QueryResult<Self> {
         use crate::schema::users::dsl::*;
 
         users.filter(email.eq(item_email)).first::<User>(db)

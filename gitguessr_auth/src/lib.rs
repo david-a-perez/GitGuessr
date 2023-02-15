@@ -29,7 +29,7 @@ pub use user_session::{UserSession, UserSessionChangeset};
 type ID = i32;
 
 #[tsync::tsync]
-type UTC = chrono::DateTime<chrono::Utc>;
+type Utc = chrono::DateTime<chrono::Utc>;
 
 #[tsync::tsync]
 #[derive(Deserialize)]
@@ -47,8 +47,8 @@ impl PaginationParams {
 pub struct UserSessionJson {
     pub id: ID,
     pub device: Option<String>,
-    pub created_at: UTC,
-    pub updated_at: UTC,
+    pub created_at: Utc,
+    pub updated_at: Utc,
 }
 
 #[tsync::tsync]

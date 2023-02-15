@@ -31,7 +31,7 @@ impl Role {
         let assigned = UserRole::create(
             db,
             &UserRoleChangeset {
-                user_id: user_id,
+                user_id,
                 role: role.to_string(),
             },
         );

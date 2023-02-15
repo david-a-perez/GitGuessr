@@ -19,7 +19,7 @@ fn shell(command: &str) {
         .arg("-c")
         .arg(command)
         .output()
-        .expect(format!("Failed to run {command}").as_str());
+        .unwrap_or_else(|_| panic!("Failed to run {command}"));
 
     // println!("build.rs => {:?}", output.stdout);
     let mut file =

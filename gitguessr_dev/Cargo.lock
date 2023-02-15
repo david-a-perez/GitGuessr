@@ -891,6 +891,8 @@ dependencies = [
 name = "gitguessr_dev"
 version = "0.0.0"
 dependencies = [
+ "actix-web",
+ "create-rust-app",
  "diesel",
  "diesel_migrations",
  "gitguessr_auth",

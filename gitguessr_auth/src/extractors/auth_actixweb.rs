@@ -116,10 +116,10 @@ impl FromRequest for Auth {
             HashSet::from_iter(access_token.claims.permissions.iter().cloned());
         let roles: HashSet<String> = HashSet::from_iter(access_token.claims.roles.iter().cloned());
 
-        return ready(Ok(Auth {
+        ready(Ok(Auth {
             user_id,
             roles,
             permissions,
-        }));
+        }))
     }
 }

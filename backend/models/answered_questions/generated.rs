@@ -5,7 +5,7 @@ use crate::schema::*;
 use diesel::QueryResult;
 use serde::{Deserialize, Serialize};
 use crate::models::live_questions::LiveQuestion;
-use gitguessr_auth::User;
+use crate::models::users::User;
 
 type Connection = create_rust_app::Connection;
 

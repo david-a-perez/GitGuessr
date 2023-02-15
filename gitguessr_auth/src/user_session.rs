@@ -2,7 +2,7 @@ use crate::schema::*;
 use crate::diesel::*;
 
 use super::user::User;
-use super::{PaginationParams, ID, UTC};
+use super::{PaginationParams, ID, Utc};
 use create_rust_app::Connection;
 use diesel::QueryResult;
 use serde::{Deserialize, Serialize};
@@ -30,8 +30,8 @@ pub struct UserSession {
     pub refresh_token: String,
     pub device: Option<String>,
 
-    pub created_at: UTC,
-    pub updated_at: UTC,
+    pub created_at: Utc,
+    pub updated_at: Utc,
 }
 
 #[tsync::tsync]

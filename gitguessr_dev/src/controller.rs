@@ -21,18 +21,13 @@ pub struct HealthCheckResponse {
 }
 
 /// /db/query
-pub fn query_db(db: &Database, body: &MySqlQuery) -> Result<String, ()> {
+pub fn query_db(db: &Database, body: &MySqlQuery) -> Result<String, diesel::result::Error> {
     let q = format!("SELECT json_agg(q) as json FROM ({}) q;", body.query);
     let mut db = db.pool.get().unwrap();
 
-    let rows = sql_query(q.as_str()).get_result::<MyQueryResult>(&mut db);
-    if rows.is_err() {
-        return Err(());
-    }
+    let rows = sql_query(q.as_str()).get_result::<MyQueryResult>(&mut db)?;
 
-    let result = rows.unwrap().json;
-
-    Ok(result)
+    Ok(rows.json)
 }
 
 /// /auth/has-system-role
@@ -87,6 +82,5 @@ pub fn migrate_db(db: &Database) -> bool {
 }
 
 /// /health
-pub fn health() -> () {
-    ()
+pub fn health() {
 }
