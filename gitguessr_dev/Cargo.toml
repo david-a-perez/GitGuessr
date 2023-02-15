@@ -1,0 +1,14 @@
+[package]
+edition = "2021"
+name = "gitguessr_dev"
+version = "0.0.0"
+publish = false
+
+[dependencies]
+actix-web = "4.2.1"
+diesel_migrations = "2.0.0"
+diesel = { version="2.0.0-rc.1", default-features = false, features = ["uuid", "r2d2", "chrono"] } # + plugin_dev, plugin_auth
+serde = { version = "1.0.152", features = ["derive"] }
+gitguessr_auth = { path = "../gitguessr_auth" }
+create-rust-app = {version="8", default-features = false, features=["database_postgres"]}
+

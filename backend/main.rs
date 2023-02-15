@@ -25,14 +25,14 @@ async fn main() -> std::io::Result<()> {
         app = app.app_data(Data::new(app_data.mailer.clone()));
 
         let mut api_scope = web::scope("/api");
-        api_scope = api_scope.service(create_rust_app::auth::endpoints(web::scope("/auth")));
+        api_scope = api_scope.service(gitguessr_auth::endpoints(web::scope("/auth")));
         api_scope = api_scope.service(services::todo::endpoints(web::scope("/todos")));
 
         #[cfg(debug_assertions)]
         {
             /* Development-only routes */
             // Mount development-only API routes
-            api_scope = api_scope.service(create_rust_app::dev::endpoints(web::scope("/development")));
+            api_scope = api_scope.service(gitguessr_dev::endpoints(web::scope("/development")));
             // Mount the admin dashboard on /admin
             app = app.service(web::scope("/admin").service(Files::new("/", ".cargo/admin/dist/").index_file("admin.html")));
         }

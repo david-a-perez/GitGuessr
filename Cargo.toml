@@ -11,7 +11,7 @@ name = "dsync"
 path = ".cargo/bin/dsync.rs"
 
 [[bin]]
-name = "GitGuessr"
+name = "gitguessr"
 path = "backend/main.rs"
 
 [dependencies]
@@ -21,9 +21,20 @@ actix-multipart = "0.4.0"
 actix-web = "4.0.1"
 dsync = "0"
 futures-util = "0.3.21"
-create-rust-app = {version="8", default-features = false, features=["plugin_dev", "plugin_auth", "plugin_container", "database_postgres", "backend_actix-web"]}
+create-rust-app = {version="8", default-features = false, features=["plugin_container", "database_postgres", "backend_actix-web"]}
 serde_json = "1.0.79"
 tsync = "1"
+derive_more = "0.99.17"
+jsonwebtoken = "7.2.0"
+lazy_static = "1.4.0"
+lettre = "0.10.1"
+anyhow = "1.0.57"
+rust-argon2 = "1.0"
+futures = "0.3.25"
+rand = "0.8.5"
+gitguessr_auth = { path = "gitguessr_auth" }
+gitguessr_dev = { path = "gitguessr_dev" }
+
 
 [dependencies.chrono]
 features = ["serde"]
@@ -43,9 +54,9 @@ features = ["full"]
 version = "1"
 
 [package]
-default-run = "GitGuessr"
+default-run = "gitguessr"
 edition = "2021"
-name = "GitGuessr"
+name = "gitguessr"
 publish = false
 version = "0.1.0"
 [profile.dev]
