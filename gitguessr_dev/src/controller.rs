@@ -37,7 +37,7 @@ pub fn query_db(db: &Database, body: &MySqlQuery) -> Result<String, ()> {
 
 /// /auth/has-system-role
 pub fn check_system_role(auth: &Auth) -> bool {
-    auth.has_permission("system".to_string())
+    auth.has_permission("system")
 }
 
 /// /auth/add-system-role

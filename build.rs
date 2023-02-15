@@ -19,16 +19,16 @@ fn shell(command: &str) {
         .arg("-c")
         .arg(command)
         .output()
-        .expect(format!("Failed to run {cmd}", cmd = command).as_str());
+        .expect(format!("Failed to run {command}").as_str());
 
     // println!("build.rs => {:?}", output.stdout);
     let mut file =
-        File::create(format!("build-log-{}.txt", command)).expect("Couldn't create file...");
-    file.write(b"build log\n\n\n\nSTDOUT:\n")
+        File::create(format!("build-log-{command}.txt")).expect("Couldn't create file...");
+    file.write_all(b"build log\n\n\n\nSTDOUT:\n")
         .expect("Couldn't write to build log");
     file.write_all(&output.stdout)
         .expect("Couldn't write to build log");
-    file.write(b"\n\n\n\nSTDERR:\n")
+    file.write_all(b"\n\n\n\nSTDERR:\n")
         .expect("Couldn't write to build log");
     file.write_all(&output.stderr)
         .expect("Couldn't write to build log");

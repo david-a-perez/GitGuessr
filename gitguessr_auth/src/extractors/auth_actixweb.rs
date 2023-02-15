@@ -21,31 +21,31 @@ pub struct Auth {
 }
 
 impl Auth {
-    pub fn has_permission(&self, permission: String) -> bool {
+    pub fn has_permission(&self, permission: &str) -> bool {
         self.permissions.contains(&Permission {
             permission: permission.to_string(),
             from_role: String::new(),
         })
     }
 
-    pub fn has_all_permissions(&self, perms: Vec<String>) -> bool {
-        perms.iter().all(|p| self.has_permission(p.to_string()))
+    pub fn has_all_permissions(&self, perms: &[&str]) -> bool {
+        perms.iter().all(|p| self.has_permission(p))
     }
 
-    pub fn has_any_permission(&self, perms: Vec<String>) -> bool {
-        perms.iter().any(|p| self.has_permission(p.to_string()))
+    pub fn has_any_permission(&self, perms: Vec<&str>) -> bool {
+        perms.iter().any(|p| self.has_permission(p))
     }
 
-    pub fn has_role(&self, permission: String) -> bool {
-        self.roles.contains(&permission.to_string())
+    pub fn has_role(&self, permission: &str) -> bool {
+        self.roles.contains(permission)
     }
 
-    pub fn has_all_roles(&self, roles: Vec<String>) -> bool {
-        roles.iter().all(|r| self.has_role(r.to_string()))
+    pub fn has_all_roles(&self, roles: &[&str]) -> bool {
+        roles.iter().all(|r| self.has_role(r))
     }
 
-    pub fn has_any_roles(&self, roles: Vec<String>) -> bool {
-        roles.iter().any(|r| self.has_role(r.to_string()))
+    pub fn has_any_roles(&self, roles: &[&str]) -> bool {
+        roles.iter().any(|r| self.has_role(r))
     }
 }
 

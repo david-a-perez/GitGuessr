@@ -106,7 +106,6 @@ pub fn get_sessions(
             id: session.id,
             device: session.device,
             created_at: session.created_at,
-            #[cfg(not(feature = "database_sqlite"))]
             updated_at: session.updated_at,
         };
 
@@ -191,6 +190,8 @@ pub fn login(
         let device_string = item.device.as_ref().unwrap();
         if device_string.len() > 256 {
             return Err((400, "'device' cannot be longer than 256 characters."));
+        } else {
+            device = Some(device_string.to_owned());
         }
     }
 

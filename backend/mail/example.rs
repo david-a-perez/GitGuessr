@@ -27,5 +27,5 @@ Warmest regards
         link = "https://app.my-domain.com"
     );
 
-    mailer.send(to_email, &subject, &text, &html);
+    mailer.send(to_email, subject, &text, &html);
 }

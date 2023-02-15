@@ -45,7 +45,7 @@ impl Role {
             roles
                 .into_iter()
                 .map(|r| UserRoleChangeset {
-                    user_id: user_id,
+                    user_id,
                     role: r,
                 })
                 .collect::<Vec<_>>(),
@@ -55,12 +55,12 @@ impl Role {
     }
 
     pub fn unassign(db: &mut Connection, user_id: ID, role: &str) -> Result<bool> {
-        let unassigned = UserRole::delete(db, user_id, role.to_string());
+        let unassigned = UserRole::delete(db, user_id, role);
 
         Ok(unassigned.is_ok())
     }
 
-    pub fn unassign_many(db: &mut Connection, user_id: ID, roles: Vec<String>) -> Result<bool> {
+    pub fn unassign_many(db: &mut Connection, user_id: ID, roles: &[&str]) -> Result<bool> {
         let unassigned = UserRole::delete_many(db, user_id, roles);
 
         Ok(unassigned.is_ok())
@@ -103,7 +103,7 @@ impl PartialEq for Permission {
 impl Eq for Permission {}
 
 impl Permission {
-    // pub fn is_granted_to_user(db: &mut Connection, user_id: ID, permission: String) -> Result<bool> {
+    // pub fn is_granted_to_user(db: &mut Connection, user_id: ID, permission: &str) -> Result<bool> {
     //   let permissions = Permission::for_user(&db, user_id)?;
     //   let user_has_permission = permissions.iter().any(|perm| perm.permission == permission);
 
@@ -173,13 +173,13 @@ impl Permission {
     }
 
     pub fn revoke_from_user(db: &mut Connection, user_id: ID, permission: &str) -> Result<bool> {
-        let deleted = UserPermission::delete(db, user_id, permission.to_string());
+        let deleted = UserPermission::delete(db, user_id, permission);
 
         Ok(deleted.is_ok())
     }
 
-    pub fn revoke_from_role(db: &mut Connection, role: String, permission: String) -> Result<bool> {
-        let deleted = RolePermission::delete(db, role, permission.to_string());
+    pub fn revoke_from_role(db: &mut Connection, role: &str, permission: &str) -> Result<bool> {
+        let deleted = RolePermission::delete(db, role, permission);
 
         Ok(deleted.is_ok())
     }
@@ -187,7 +187,7 @@ impl Permission {
     pub fn revoke_many_from_user(
         db: &mut Connection,
         user_id: ID,
-        permissions: Vec<String>,
+        permissions: &[&str],
     ) -> Result<bool> {
         let deleted = UserPermission::delete_many(db, user_id, permissions);
 
@@ -196,8 +196,8 @@ impl Permission {
 
     pub fn revoke_many_from_role(
         db: &mut Connection,
-        role: String,
-        permissions: Vec<String>,
+        role: &str,
+        permissions: &[&str],
     ) -> Result<bool> {
         let deleted = RolePermission::delete_many(db, role, permissions);
 

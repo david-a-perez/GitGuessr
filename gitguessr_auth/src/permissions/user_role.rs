@@ -43,14 +43,6 @@ impl UserRole {
             .get_result::<UserRole>(db)
     }
 
-    #[cfg(feature = "database_sqlite")]
-    pub fn create_many(db: &mut Connection, items: Vec<UserRoleChangeset>) -> QueryResult<usize> {
-        use crate::schema::user_roles::dsl::*;
-
-        insert_into(user_roles).values(items).execute(db)
-    }
-
-    #[cfg(not(feature = "database_sqlite"))]
     pub fn create_many(
         db: &mut Connection,
         items: Vec<UserRoleChangeset>,
@@ -62,7 +54,7 @@ impl UserRole {
             .get_results::<UserRole>(db)
     }
 
-    pub fn read(db: &mut Connection, item_user_id: ID, item_role: String) -> QueryResult<Self> {
+    pub fn read(db: &mut Connection, item_user_id: ID, item_role: &str) -> QueryResult<Self> {
         use crate::schema::user_roles::dsl::*;
 
         user_roles
@@ -79,7 +71,7 @@ impl UserRole {
             .load::<UserRole>(db)
     }
 
-    pub fn delete(db: &mut Connection, item_user_id: ID, item_role: String) -> QueryResult<usize> {
+    pub fn delete(db: &mut Connection, item_user_id: ID, item_role: &str) -> QueryResult<usize> {
         use crate::schema::user_roles::dsl::*;
 
         diesel::delete(user_roles.filter(user_id.eq(item_user_id).and(role.eq(item_role))))
@@ -89,7 +81,7 @@ impl UserRole {
     pub fn delete_many(
         db: &mut Connection,
         item_user_id: ID,
-        item_roles: Vec<String>,
+        item_roles: &[&str],
     ) -> QueryResult<usize> {
         use crate::schema::user_roles::dsl::*;
 

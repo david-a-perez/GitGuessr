@@ -43,19 +43,6 @@ impl UserPermission {
             .get_result::<UserPermission>(db)
     }
 
-    #[cfg(feature="database_sqlite")]
-    pub fn create_many(
-        db: &mut Connection,
-        items: Vec<UserPermissionChangeset>,
-    ) -> QueryResult<usize> {
-        use crate::schema::user_permissions::dsl::*;
-
-        insert_into(user_permissions)
-            .values(items)
-            .execute(db)
-    }
-
-    #[cfg(not(feature="database_sqlite"))]
     pub fn create_many(
         db: &mut Connection,
         items: Vec<UserPermissionChangeset>,
@@ -70,7 +57,7 @@ impl UserPermission {
     pub fn read(
         db: &mut Connection,
         item_user_id: ID,
-        item_permission: String,
+        item_permission: &str,
     ) -> QueryResult<Self> {
         use crate::schema::user_permissions::dsl::*;
 
@@ -91,7 +78,7 @@ impl UserPermission {
     pub fn delete(
         db: &mut Connection,
         item_user_id: ID,
-        item_permission: String,
+        item_permission: &str,
     ) -> QueryResult<usize> {
         use crate::schema::user_permissions::dsl::*;
 
@@ -104,7 +91,7 @@ impl UserPermission {
     pub fn delete_many(
         db: &mut Connection,
         item_user_id: ID,
-        item_permissions: Vec<String>,
+        item_permissions: &[&str],
     ) -> QueryResult<usize> {
         use crate::schema::user_permissions::dsl::*;
 

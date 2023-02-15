@@ -1,6 +1,6 @@
 use crate::{
     controller,
-    controller::{HealthCheckResponse, MyQueryResult, MySqlQuery},
+    controller::{HealthCheckResponse, MySqlQuery},
 };
 use create_rust_app::Database;
 use gitguessr_auth::Auth;
@@ -15,7 +15,7 @@ use std::ops::Deref;
 async fn query_db(db: Data<Database>, body: Json<MySqlQuery>) -> HttpResponse {
     match controller::query_db(&db, body.deref()) {
         Ok(result) => HttpResponse::Ok().body(result),
-        Err(t) => HttpResponse::InternalServerError().finish(),
+        Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 

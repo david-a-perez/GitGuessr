@@ -79,7 +79,7 @@ async fn login(db: Data<Database>, Json(item): Json<LoginInput>) -> Result<HttpR
     match result {
         Ok((access_token, refresh_token)) => Ok(HttpResponse::build(StatusCode::OK)
             .cookie(
-                Cookie::build(COOKIE_NAME, refresh_token.clone())
+                Cookie::build(COOKIE_NAME, refresh_token)
                     .secure(true)
                     .http_only(true)
                     .same_site(SameSite::Strict)

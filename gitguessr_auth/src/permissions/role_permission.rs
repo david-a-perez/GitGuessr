@@ -37,19 +37,6 @@ impl RolePermission {
             .get_result::<RolePermission>(db)
     }
 
-    #[cfg(feature = "database_sqlite")]
-    pub fn create_many(
-        db: &mut Connection,
-        items: Vec<RolePermissionChangeset>,
-    ) -> QueryResult<usize> {
-        use crate::schema::role_permissions::dsl::*;
-
-        insert_into(role_permissions)
-            .values(items)
-            .execute(db)
-    }
-
-    #[cfg(not(feature = "database_sqlite"))]
     pub fn create_many(
         db: &mut Connection,
         items: Vec<RolePermissionChangeset>,
@@ -63,8 +50,8 @@ impl RolePermission {
 
     pub fn read(
         db: &mut Connection,
-        item_role: String,
-        item_permission: String,
+        item_role: &str,
+        item_permission: &str,
     ) -> QueryResult<Self> {
         use crate::schema::role_permissions::dsl::*;
 
@@ -73,7 +60,7 @@ impl RolePermission {
             .first::<RolePermission>(db)
     }
 
-    pub fn read_all(db: &mut Connection, item_role: String) -> QueryResult<Vec<Self>> {
+    pub fn read_all(db: &mut Connection, item_role: &str) -> QueryResult<Vec<Self>> {
         use crate::schema::role_permissions::dsl::*;
 
         role_permissions
@@ -84,8 +71,8 @@ impl RolePermission {
 
     pub fn delete(
         db: &mut Connection,
-        item_role: String,
-        item_permission: String,
+        item_role: &str,
+        item_permission: &str,
     ) -> QueryResult<usize> {
         use crate::schema::role_permissions::dsl::*;
 
@@ -97,8 +84,8 @@ impl RolePermission {
 
     pub fn delete_many(
         db: &mut Connection,
-        item_role: String,
-        item_permissions: Vec<String>,
+        item_role: &str,
+        item_permissions: &[&str],
     ) -> QueryResult<usize> {
         use crate::schema::role_permissions::dsl::*;
 

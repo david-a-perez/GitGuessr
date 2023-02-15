@@ -22,7 +22,6 @@ pub struct User {
     pub activated: bool,
 
     pub created_at: UTC,
-    #[cfg(not(feature = "database_sqlite"))]
     pub updated_at: UTC,
 }
 

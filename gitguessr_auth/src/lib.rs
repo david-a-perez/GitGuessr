@@ -48,7 +48,6 @@ pub struct UserSessionJson {
     pub id: ID,
     pub device: Option<String>,
     pub created_at: UTC,
-    #[cfg(not(feature = "database_sqlite"))]
     pub updated_at: UTC,
 }
 

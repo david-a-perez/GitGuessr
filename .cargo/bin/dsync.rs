@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
-use dsync;
 use dsync::{GenerationConfig, TableOptions};
 
 pub fn main() {
