@@ -7,9 +7,12 @@ import { RecoveryPage } from './containers/RecoveryPage'
 import { ResetPage } from './containers/ResetPage'
 import React from 'react'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.css';
 import { Home } from './containers/Home'
-import { Todos } from './containers/Todo'
 import { Route, useNavigate, Routes } from 'react-router-dom'
+import { GameSelectPage } from './containers/GameSelectPage'
+import { RepoSelectPage } from './containers/RepoSelectPage'
+import { Button } from 'react-bootstrap'
 
 const App = () => {
   useAuthCheck()
@@ -23,21 +26,20 @@ const App = () => {
     <div className="App">
       <div className="App-nav-header">
         <div style={{ display: 'flex', flex: 1 }}>
-          <a className="NavButton" onClick={() => navigate('/')}>Home</a>
-          <a className="NavButton" onClick={() => navigate('/todos')}>Todos</a>
+          <Button onClick={() => navigate('/')}>Home</Button>
           {/* CRA: left-aligned nav buttons */}
-          <a className="NavButton" onClick={() => navigate('/account')}>Account</a>
         </div>
         <div>
           {/* CRA: right-aligned nav buttons */}
-          { auth.isAuthenticated && <a className="NavButton" onClick={() => auth.logout()}>Logout</a> }
-          { !auth.isAuthenticated && <a className="NavButton" onClick={() => navigate('/login')}>Login/Register</a> }
+          { auth.isAuthenticated && <Button onClick={() => navigate('/account')}>Account</Button> }
+          { !auth.isAuthenticated && <Button onClick={() => navigate('/login')}>Login/Register</Button> }
         </div>
       </div>
       <div style={{ margin: '0 auto', maxWidth: '800px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/todos" element={<Todos />} />
+            <Route path="/games" element={<GameSelectPage />} />
+            <Route path="/repos" element={<RepoSelectPage />} />
             {/* CRA: routes */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/recovery" element={<RecoveryPage />} />

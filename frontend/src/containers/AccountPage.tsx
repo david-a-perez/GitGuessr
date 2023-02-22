@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import Button from 'react-bootstrap/Button'
 
 export const AccountPage = () => {
   const auth = useAuth()
@@ -105,92 +106,96 @@ export const AccountPage = () => {
     setProcessing(false)
   }
 
-  return (
-    <div style={{ textAlign: 'left' }}>
-      <h1>Account</h1>
-      <br />
-      {auth.isAuthenticated && (
-        <div>
-          User # {auth.session?.userId}
-          <div className="Form" style={{ textAlign: 'left' }}>
-            <h1>Permissions</h1>
-            <pre>
-              {!auth.session && (
-                <div>Error: No auth session present.</div>
-              )}
-              {auth.session?.permissions?.map((perm) => {
-                return <div>{JSON.stringify(perm)}</div>
-              })}
-              {auth.session?.permissions?.length === 0 && (
-                <div>No permissions granted.</div>
-              )}
-            </pre>
-          </div>
-          <div className="Form" style={{ textAlign: 'left' }}>
-            <h1>Change password</h1>
-            <br />
-            <div style={{ display: 'flex', flexFlow: 'column' }}>
-              <label>Original Password</label>
-              <input
-                type="password"
-                value={originalPassword}
-                onChange={(e) => setOriginalPassword(e.target.value)}
-              />
-            </div>
-            <div style={{ display: 'flex', flexFlow: 'column' }}>
-              <label>New Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div style={{ display: 'flex', flexFlow: 'column' }}>
-              <button disabled={processing} onClick={changePassword}>
-                Change Password
-              </button>
-            </div>
-          </div>
-          <div>
-            <h1>Sessions</h1>
-            <button disabled={isDeleting} onClick={() => deleteAllSessions()}>
-              Delete All
-            </button>
-            {sessions.sessions.map((session) => (
-              <div>
-                {JSON.stringify(session, null, 2)}
-                <button
-                  disabled={isDeleting}
-                  onClick={() => deleteSession(session.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-            {isFetchingSessions && <div>Fetching sessions...</div>}
-            <div>
-              <button
-                disabled={page <= 0}
-                onClick={() => setPage(page - 1)}
-              >{`<<`}</button>
-              <span>
-                {page + 1} / {sessions.num_pages}
-              </span>
-              <button
-                disabled={page + 1 >= sessions.num_pages}
-                onClick={() => setPage(page + 1)}
-              >{`>>`}</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {!auth.isAuthenticated && (
-        <div>
+  if(!auth.isAuthenticated) {
+    return (
+      <div>
           <a href="#" onClick={() => navigate('/login')}>
             Login to view your account detials
           </a>
         </div>
-      )}
+    )
+  }
+
+  return (
+    <div style={{ textAlign: 'left' }}>
+      <h1>Account</h1>
+      <br />
+      <div>
+        User # {auth.session?.userId}
+        <div className='mb-2 mt-2'>
+          <Button onClick={auth.logout}>Log Out</Button>
+        </div>
+        <div className="Form" style={{ textAlign: 'left' }}>
+          <h1>Permissions</h1>
+          <pre>
+            {!auth.session && (
+              <div>Error: No auth session present.</div>
+            )}
+            {auth.session?.permissions?.map((perm) => {
+              return <div>{JSON.stringify(perm)}</div>
+            })}
+            {auth.session?.permissions?.length === 0 && (
+              <div>No permissions granted.</div>
+            )}
+          </pre>
+        </div>
+        <div className="Form" style={{ textAlign: 'left' }}>
+          <h1>Change password</h1>
+          <br />
+          <div style={{ display: 'flex', flexFlow: 'column' }}>
+            <label>Original Password</label>
+            <input
+              type="password"
+              value={originalPassword}
+              onChange={(e) => setOriginalPassword(e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', flexFlow: 'column' }}>
+            <label>New Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div style={{ display: 'flex', flexFlow: 'column' }}>
+            <button disabled={processing} onClick={changePassword}>
+              Change Password
+            </button>
+          </div>
+        </div>
+        <div>
+          <h1>Sessions</h1>
+          <button disabled={isDeleting} onClick={() => deleteAllSessions()}>
+            Delete All
+          </button>
+          {sessions.sessions.map((session) => (
+            <div>
+              {JSON.stringify(session, null, 2)}
+              <button
+                disabled={isDeleting}
+                onClick={() => deleteSession(session.id)}
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+          {isFetchingSessions && <div>Fetching sessions...</div>}
+          <div>
+            <button
+              disabled={page <= 0}
+              onClick={() => setPage(page - 1)}
+            >{`<<`}</button>
+            <span>
+              {page + 1} / {sessions.num_pages}
+            </span>
+            <button
+              disabled={page + 1 >= sessions.num_pages}
+              onClick={() => setPage(page + 1)}
+            >{`>>`}</button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
