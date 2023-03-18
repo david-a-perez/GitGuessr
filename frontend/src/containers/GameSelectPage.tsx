@@ -30,7 +30,7 @@ export const GameSelectPage = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Game Mode 2</h5>
                                 <p className="card-text">This is placeholder text for game mode 2.</p>
-                                <Button variant='success' onClick={() => navigate('/game-1')}>Select</Button>
+                                <Button variant='success' onClick={() => navigate('/game-2')}>Select</Button>
                             </div>
                         </div>
                     </div>

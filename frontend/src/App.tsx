@@ -13,6 +13,7 @@ import { Route, useNavigate, Routes } from 'react-router-dom'
 import { GameSelectPage } from './containers/GameSelectPage'
 import { RepoSelectPage } from './containers/RepoSelectPage'
 import { GameMode1Page } from './containers/GameMode1Page'
+import { GameMode2Page } from './containers/GameMode2Page'
 import { PartyPage } from './containers/PartyPage'
 import { QuizPage } from './containers/QuizPage'
 import { DailyChallengePage } from './containers/DailyChallengePage'
@@ -52,6 +53,7 @@ const App = () => {
             <Route path="/games" element={<GameSelectPage />} />
             <Route path="/repos" element={<RepoSelectPage />} />
             <Route path="/game-1" element={<GameMode1Page />} />
+            <Route path="/game-2" element={<GameMode2Page />} />
             <Route path="/party" element={<PartyPage />} />
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/daily-challenge" element={<DailyChallengePage />} />
